@@ -63,6 +63,11 @@ public class Matrix {
     int noOfCols1 = this.matrix[0].length;
     int noOfCols2 = other.matrix[0].length;
     int noOfRows2 = other.matrix.length;
+
+    if (noOfCols1 != noOfRows2) {
+      return null;
+    }
+
     int[][] productOfMatrix = new int[noOfRows1][noOfCols2];
 
     for (int rowId1 = 0; rowId1 < noOfRows1; rowId1++) {
