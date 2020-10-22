@@ -1,7 +1,9 @@
 package com.step.math;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -109,5 +111,36 @@ public class MatrixTest {
 
     Matrix matrix = Matrix.init(list);
     assertEquals(-240, matrix.determinant());
+  }
+
+  @Test
+  public void testTranspose() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    Matrix matrix = Matrix.init(list1);
+    Matrix transposedMatrix = matrix.transpose();
+
+    int[][] list2 = { { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 } };
+    Matrix expected = Matrix.init(list2);
+    assertEquals(expected, transposedMatrix);
+  }
+
+  @Test
+  public void testEqualMatrices() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int[][] list2 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    Matrix matrix1 = Matrix.init(list1);
+    Matrix matrix2 = Matrix.init(list2);
+
+    assertTrue("Equal: should be true ", matrix1.equals(matrix2));
+  }
+
+  @Test
+  public void testUnEqualMatrices() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int[][] list2 = { { 3, 3, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    Matrix matrix1 = Matrix.init(list1);
+    Matrix matrix2 = Matrix.init(list2);
+
+    assertFalse("Equal: should be false ", matrix1.equals(matrix2));
   }
 }
