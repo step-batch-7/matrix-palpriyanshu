@@ -175,14 +175,50 @@ public class MatrixTest {
   }
 
   @Test
-  public void testUnEqualMatrices() {
+  public void testEqualityOfMatricesWithSameReference() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    Matrix matrix = Matrix.init(list1);
+
+    assertTrue(
+      "Equal: should return true for two matrices having the same reference",
+      matrix.equals(matrix)
+    );
+  }
+
+  @Test
+  public void testEqualityOfMatricesWithDifferentElements() {
     int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
     int[][] list2 = { { 3, 3, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
     Matrix matrix1 = Matrix.init(list1);
     Matrix matrix2 = Matrix.init(list2);
 
     assertFalse(
-      "Equal: should return false for two unequal matrices",
+      "Equal: should return false for two matrices with different elements",
+      matrix1.equals(matrix2)
+    );
+  }
+
+  @Test
+  public void testEqualityOfMatricesWithDifferentInstance() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int[][] list2 = { { 3, 3, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    Matrix matrix = Matrix.init(list1);
+
+    assertFalse(
+      "Equal: should return false for one matrix Object and one other Object",
+      matrix.equals(list2)
+    );
+  }
+
+  @Test
+  public void testEqualityOfMatricesWithDifferentDimensions() {
+    int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int[][] list2 = { { 3, 3, 3 }, { 4, 5, 6 } };
+    Matrix matrix1 = Matrix.init(list1);
+    Matrix matrix2 = Matrix.init(list2);
+
+    assertFalse(
+      "Equal: should return false for two matrices having different dimensions",
       matrix1.equals(matrix2)
     );
   }
