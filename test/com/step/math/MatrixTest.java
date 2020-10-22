@@ -1,13 +1,22 @@
 package com.step.math;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 public class MatrixTest {
+
+  @Test
+  public void testInit() {
+    int[][] list1 = { { 1, 1 }, { 1, 1 } };
+    Matrix matrix = Matrix.init(list1);
+    assertTrue(matrix instanceof Matrix);
+  }
 
   @Test
   public void testAddition() {
@@ -85,14 +94,14 @@ public class MatrixTest {
     int[][] list = { { 1 } };
 
     Matrix matrix = Matrix.init(list);
-    assertEquals("determinant: should be equal ", 1, matrix.determinant());
+    assertThat(matrix.determinant(), is(1));
   }
 
   @Test
   public void testDeterminantForMatrixOfSize2() {
     int[][] list = { { 1, 1 }, { 1, 1 } };
     Matrix matrix = Matrix.init(list);
-    assertEquals("determinant: should be equal ", 0, matrix.determinant());
+    assertThat(matrix.determinant(), is(0));
   }
 
   @Test
@@ -105,7 +114,7 @@ public class MatrixTest {
     };
 
     Matrix matrix = Matrix.init(list);
-    assertEquals("determinant: should be equal", -240, matrix.determinant());
+    assertThat(matrix.determinant(), is(-240));
   }
 
   @Test

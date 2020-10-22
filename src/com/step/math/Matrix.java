@@ -3,7 +3,7 @@ package com.step.math;
 public class Matrix {
   private int[][] matrix;
 
-  private Matrix(int[][] matrix) {
+  public Matrix(int[][] matrix) {
     this.matrix = matrix;
   }
 
