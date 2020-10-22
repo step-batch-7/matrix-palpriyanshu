@@ -13,12 +13,17 @@ public class MatrixTest {
 
   @Test
   public void testInit() {
-    int[][] list1 = { { 1, 1 }, { 1, 1 } };
+    int[][] list1 = { { 1, 1 }, { 2, 2 } };
     Matrix matrix = Matrix.init(list1);
     assertTrue(
       "init: should return instance of Matrix class ",
       matrix instanceof Matrix
     );
+
+    int[] row1 = { 1, 1 };
+    int[] row2 = { 2, 2 };
+    assertTrue(matrix.hasSubArray(row1));
+    assertTrue(matrix.hasSubArray(row2));
   }
 
   @Test
@@ -150,7 +155,7 @@ public class MatrixTest {
     int[][] list2 = { { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 } };
     Matrix expected = Matrix.init(list2);
     assertEquals(
-      "transpose: should return transpose of a matrix"s,
+      "transpose: should return transpose of a matrix",
       expected,
       transposedMatrix
     );
@@ -163,7 +168,10 @@ public class MatrixTest {
     Matrix matrix1 = Matrix.init(list1);
     Matrix matrix2 = Matrix.init(list2);
 
-    assertTrue("Equal: should return true for two equal matrices", matrix1.equals(matrix2));
+    assertTrue(
+      "Equal: should return true for two equal matrices",
+      matrix1.equals(matrix2)
+    );
   }
 
   @Test
@@ -173,16 +181,21 @@ public class MatrixTest {
     Matrix matrix1 = Matrix.init(list1);
     Matrix matrix2 = Matrix.init(list2);
 
-    assertFalse("Equal: should return false for two unequal matrices", matrix1.equals(matrix2));
+    assertFalse(
+      "Equal: should return false for two unequal matrices",
+      matrix1.equals(matrix2)
+    );
   }
 
   @Test
-  public void testIsElementPresent() {
+  public void testIfElementPresent() {
     int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
     Matrix matrix = Matrix.init(list1);
 
-    assertTrue("IsElementPresent: should return true when given element is present", 
-    matrix.isElementPresent(2));
+    assertTrue(
+      "hasElement: should return true when given element is present",
+      matrix.hasElement(2)
+    );
   }
 
   @Test
@@ -191,32 +204,32 @@ public class MatrixTest {
     Matrix matrix = Matrix.init(list1);
 
     assertFalse(
-      "IsElementPresent: should return false when given element is absent",
-      matrix.isElementPresent(2)
+      "hasElement: should return false when given element is absent",
+      matrix.hasElement(2)
     );
   }
 
   @Test
-  public void testIsSubArrayPresent() {
+  public void testIfSubArrayPresent() {
     int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
     int[] list2 = { 1, 2, 3 };
     Matrix matrix = Matrix.init(list1);
 
     assertTrue(
-      "isSubArrayPresent: should return true when given subArray is present ",
-      matrix.isSubArrayPresent(list2)
+      "hasSubArray: should return true when given subArray is present ",
+      matrix.hasSubArray(list2)
     );
   }
 
   @Test
-  public void testIsSubArrayNotPresent() {
+  public void testIfSubArrayNotPresent() {
     int[][] list1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
     int[] list2 = { 3, 3, 3 };
     Matrix matrix = Matrix.init(list1);
 
     assertFalse(
-      "isSubArrayPresent: should return false when given subArray is absent ",
-      matrix.isSubArrayPresent(list2)
+      "hasSubArray: should return false when given subArray is absent ",
+      matrix.hasSubArray(list2)
     );
   }
 
@@ -225,6 +238,10 @@ public class MatrixTest {
     int[][] list1 = { { 1, 1 }, { 1, 1 } };
     Matrix matrix = Matrix.init(list1);
     String string = "Matrix :\n1 1 \n1 1 \n";
-    assertEquals("toString : should return textual representation of matrix class", string, matrix.toString());
+    assertEquals(
+      "toString : should return textual representation of matrix class",
+      string,
+      matrix.toString()
+    );
   }
 }

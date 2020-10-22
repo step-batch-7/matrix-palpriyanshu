@@ -139,7 +139,7 @@ public class Matrix {
     return new Matrix(transposedMatrix);
   }
 
-  public boolean isElementPresent(int element) {
+  public boolean hasElement(int element) {
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
       int[] row = this.matrix[rowId];
       if (Array.init(row).isPresent(element)) {
@@ -149,7 +149,7 @@ public class Matrix {
     return false;
   }
 
-  public boolean isSubArrayPresent(int[] array) {
+  public boolean hasSubArray(int[] array) {
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
       int[] subArray = this.matrix[rowId];
       if (Array.init(subArray).deepEqual(Array.init(array))) {
