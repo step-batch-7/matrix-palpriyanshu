@@ -117,15 +117,10 @@ public class MatrixTest {
 
   @Test
   public void shouldCalculateDeterminantForMatrixSize3() {
-    int[][] list = {
-      { 4, 3, 2, 2 },
-      { 0, 1, -3, 3 },
-      { 0, -1, 3, 3 },
-      { 0, 3, 1, 1 },
-    };
+    int[][] list = { { 1, 2, 3 }, { 2, 4, 5 }, { 3, 5, 6 } };
 
     Matrix matrix = Matrix.init(list);
-    assertThat(matrix.determinant(), is(-240));
+    assertThat(matrix.determinant(), is(-1));
   }
 
   @Test
