@@ -12,7 +12,7 @@ import org.junit.Test;
 public class MatrixTest {
 
   @Test
-  public void shouldInitializeMatrix() {
+  public void shouldInitializeValidMatrix() {
     int[][] list1 = { { 1, 1 }, { 2, 2 } };
     Matrix matrix = Matrix.init(list1);
     assertTrue(matrix instanceof Matrix);
@@ -21,6 +21,12 @@ public class MatrixTest {
     int[] row2 = { 2, 2 };
     assertTrue(matrix.hasSubArray(row1));
     assertTrue(matrix.hasSubArray(row2));
+  }
+
+  @Test
+  public void shouldNotInitializeInvalidMatrix() {
+    int[][] list1 = { { 1, 1 }, { 2 } };
+    assertNull(Matrix.init(list1));
   }
 
   @Test

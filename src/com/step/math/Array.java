@@ -24,7 +24,7 @@ class Array {
     return -1;
   }
 
-  public boolean isPresent(int element) {
+  public boolean has(int element) {
     return findIndex(element) != -1;
   }
 

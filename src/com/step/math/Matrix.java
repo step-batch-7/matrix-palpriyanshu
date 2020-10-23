@@ -7,12 +7,32 @@ public class Matrix {
     this.matrix = matrix;
   }
 
+  private static int getFirstRowSize(int[][] list) {
+    return list[0].length;
+  }
+
+  private static boolean sizeOfAllRowsEqual(int[][] list) {
+    int sizeOfFirstRow = getFirstRowSize(list);
+    for (int rowId = 1; rowId < list.length; rowId++) {
+      if (sizeOfFirstRow != list[rowId].length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   public static Matrix init(int[][] list) {
+    if (!(sizeOfAllRowsEqual(list))) {
+      return null;
+    }
     int noOfRows = list.length;
-    int noOfCols = list[0].length;
+    int noOfCols = getFirstRowSize(list);
+    int startingIndex = 0;
+
     int[][] matrix = new int[noOfRows][noOfCols];
-    for (int rowId = 0; rowId < noOfRows; rowId++) {
-      for (int colId = 0; colId < noOfCols; colId++) {
+
+    for (int rowId = startingIndex; rowId < noOfRows; rowId++) {
+      for (int colId = startingIndex; colId < noOfCols; colId++) {
         matrix[rowId][colId] = list[rowId][colId];
       }
     }
@@ -22,7 +42,7 @@ public class Matrix {
   private boolean isMatrixSizeEqual(Matrix other) {
     return (
       this.matrix.length == other.matrix.length &&
-      this.matrix[0].length == other.matrix[0].length
+      getFirstRowSize(this.matrix) == getFirstRowSize(other.matrix)
     );
   }
 
@@ -30,11 +50,14 @@ public class Matrix {
     if (!isMatrixSizeEqual(other)) {
       return null;
     }
+
     int noOfRows = other.matrix.length;
-    int noOfCols = other.matrix[0].length;
+    int noOfCols = getFirstRowSize(other.matrix);
     int[][] sumOfMatrix = new int[noOfRows][noOfCols];
-    for (int rowId = 0; rowId < noOfRows; rowId++) {
-      for (int colId = 0; colId < noOfCols; colId++) {
+    int startingIndex = 0;
+
+    for (int rowId = startingIndex; rowId < noOfRows; rowId++) {
+      for (int colId = startingIndex; colId < noOfCols; colId++) {
         sumOfMatrix[rowId][colId] =
           this.matrix[rowId][colId] + other.matrix[rowId][colId];
       }
@@ -46,11 +69,14 @@ public class Matrix {
     if (!isMatrixSizeEqual(other)) {
       return null;
     }
+
     int noOfRows = other.matrix.length;
-    int noOfCols = other.matrix[0].length;
+    int noOfCols = getFirstRowSize(other.matrix);
     int[][] sumOfMatrix = new int[noOfRows][noOfCols];
-    for (int rowId = 0; rowId < noOfRows; rowId++) {
-      for (int colId = 0; colId < noOfCols; colId++) {
+    int startingIndex = 0;
+
+    for (int rowId = startingIndex; rowId < noOfRows; rowId++) {
+      for (int colId = startingIndex; colId < noOfCols; colId++) {
         sumOfMatrix[rowId][colId] =
           this.matrix[rowId][colId] - other.matrix[rowId][colId];
       }
@@ -60,20 +86,21 @@ public class Matrix {
 
   public Matrix multiply(Matrix other) {
     int noOfRows1 = this.matrix.length;
-    int noOfCols1 = this.matrix[0].length;
-    int noOfCols2 = other.matrix[0].length;
+    int noOfCols1 = getFirstRowSize(this.matrix);
     int noOfRows2 = other.matrix.length;
+    int noOfCols2 = getFirstRowSize(other.matrix);
 
     if (noOfCols1 != noOfRows2) {
       return null;
     }
 
     int[][] productOfMatrix = new int[noOfRows1][noOfCols2];
+    int startingIndex = 0;
 
-    for (int rowId1 = 0; rowId1 < noOfRows1; rowId1++) {
-      for (int colId2 = 0; colId2 < noOfCols2; colId2++) {
+    for (int rowId1 = startingIndex; rowId1 < noOfRows1; rowId1++) {
+      for (int colId2 = startingIndex; colId2 < noOfCols2; colId2++) {
         for (
-          int rowId2 = 0;
+          int rowId2 = startingIndex;
           rowId2 < Math.min(noOfRows2, noOfCols1);
           rowId2++
         ) {
@@ -87,7 +114,8 @@ public class Matrix {
 
   private Matrix getCoFactors(int factorIdx) {
     int size = this.matrix.length;
-    int[][] cofactor = new int[size - 1][size - 1];
+    int unitValue = 1;
+    int[][] cofactor = new int[size - unitValue][size - unitValue];
 
     for (int rowId = 1; rowId < size; rowId++) {
       for (int colId = 0; colId < size; colId++) {
@@ -129,10 +157,12 @@ public class Matrix {
 
   public Matrix transpose() {
     int noOfCols = this.matrix.length;
-    int noOfRows = this.matrix[0].length;
+    int noOfRows = getFirstRowSize(this.matrix);
     int[][] transposedMatrix = new int[noOfRows][noOfCols];
-    for (int rowId = 0; rowId < noOfCols; rowId++) {
-      for (int colId = 0; colId < noOfRows; colId++) {
+    int startingIndex = 0;
+
+    for (int rowId = startingIndex; rowId < noOfCols; rowId++) {
+      for (int colId = startingIndex; colId < noOfRows; colId++) {
         transposedMatrix[rowId][colId] = this.matrix[colId][rowId];
       }
     }
@@ -141,8 +171,9 @@ public class Matrix {
 
   public boolean hasElement(int element) {
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
-      int[] row = this.matrix[rowId];
-      if (Array.init(row).isPresent(element)) {
+      Array rowOfMatrix = Array.init(this.matrix[rowId]);
+
+      if (rowOfMatrix.has(element)) {
         return true;
       }
     }
@@ -150,9 +181,12 @@ public class Matrix {
   }
 
   public boolean hasSubArray(int[] array) {
+    Array subArray = Array.init(array);
+
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
-      int[] subArray = this.matrix[rowId];
-      if (Array.init(subArray).deepEqual(Array.init(array))) {
+      Array rowOfMatrix = Array.init(this.matrix[rowId]);
+
+      if (rowOfMatrix.deepEqual(subArray)) {
         return true;
       }
     }
@@ -179,6 +213,7 @@ public class Matrix {
       Array rowOfMatrixA = Array.init(this.matrix[rowId]);
       Array rowOfMatrixB = Array.init(otherMatrix.matrix[rowId]);
       int[] subArray = this.matrix[rowId];
+
       if (!(rowOfMatrixA.deepEqual(rowOfMatrixB))) {
         return false;
       }
