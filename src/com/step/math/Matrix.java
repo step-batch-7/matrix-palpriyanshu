@@ -99,11 +99,7 @@ public class Matrix {
 
     for (int rowId1 = startingIndex; rowId1 < noOfRows1; rowId1++) {
       for (int colId2 = startingIndex; colId2 < noOfCols2; colId2++) {
-        for (
-          int rowId2 = startingIndex;
-          rowId2 < Math.min(noOfRows2, noOfCols1);
-          rowId2++
-        ) {
+        for (int rowId2 = startingIndex; rowId2 < noOfRows2; rowId2++) {
           productOfMatrix[rowId1][colId2] +=
             this.matrix[rowId1][rowId2] * other.matrix[rowId2][colId2];
         }
@@ -115,19 +111,19 @@ public class Matrix {
   private Matrix getCoFactors(int factorIdx) {
     int size = this.matrix.length;
     int unitValue = 1;
-    int[][] cofactor = new int[size - unitValue][size - unitValue];
+    int[][] coFactors = new int[size - unitValue][size - unitValue];
 
-    for (int rowId = 1; rowId < size; rowId++) {
+    for (int rowId = unitValue; rowId < size; rowId++) {
       for (int colId = 0; colId < size; colId++) {
-        if (colId < factorIdx) {
-          cofactor[rowId - 1][colId] = matrix[rowId][colId];
-        }
-        if (colId > factorIdx) {
-          cofactor[rowId - 1][colId - 1] = matrix[rowId][colId];
+        int lastRowId = rowId - unitValue;
+        if (colId != factorIdx) {
+          int lastColId = colId < factorIdx ? colId : colId - unitValue;
+          coFactors[lastRowId][lastColId] = matrix[rowId][colId];
         }
       }
     }
-    return new Matrix(cofactor);
+
+    return new Matrix(coFactors);
   }
 
   public int determinant() {
