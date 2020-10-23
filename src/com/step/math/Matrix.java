@@ -11,28 +11,18 @@ public class Matrix {
     return list[0].length;
   }
 
-  private static boolean sizeOfAllRowsEqual(int[][] list) {
-    int sizeOfFirstRow = getFirstRowSize(list);
-    for (int rowId = 1; rowId < list.length; rowId++) {
-      if (sizeOfFirstRow != list[rowId].length) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   public static Matrix init(int[][] list) {
-    if (!(sizeOfAllRowsEqual(list))) {
-      return null;
-    }
     int noOfRows = list.length;
     int noOfCols = getFirstRowSize(list);
-    int startingIndex = 0;
 
     int[][] matrix = new int[noOfRows][noOfCols];
 
-    for (int rowId = startingIndex; rowId < noOfRows; rowId++) {
-      for (int colId = startingIndex; colId < noOfCols; colId++) {
+    for (int rowId = 0; rowId < noOfRows; rowId++) {
+      if (noOfCols != list[rowId].length) {
+        return null;
+      }
+
+      for (int colId = 0; colId < noOfCols; colId++) {
         matrix[rowId][colId] = list[rowId][colId];
       }
     }
