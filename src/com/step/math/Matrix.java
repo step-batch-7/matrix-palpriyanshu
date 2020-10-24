@@ -141,12 +141,8 @@ public class Matrix {
   }
 
   public boolean hasRow(int[] array) {
-    Array subArray = Array.init(array);
-
-    for (int rowId = 0; rowId < this.matrix.length; rowId++) {
-      Array rowOfMatrix = Array.init(this.matrix[rowId]);
-
-      if (rowOfMatrix.deepEqual(subArray)) {
+    for (int rowId = 0; rowId < this.noOfRows; rowId++) {
+      if (this.areRowsSame(array, this.matrix[rowId])) {
         return true;
       }
     }
@@ -155,6 +151,19 @@ public class Matrix {
 
   private boolean areMatricesOrderSame(Matrix other) {
     return (this.noOfCols == other.noOfCols && this.noOfRows == other.noOfRows);
+  }
+
+  private boolean areRowsSame(int[] row1, int[] row2) {
+    if (row1.length != row2.length) {
+      return false;
+    }
+
+    for (int index = 0; index < row1.length; index++) {
+      if (row1[index] != row2[index]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
@@ -173,11 +182,8 @@ public class Matrix {
       return false;
     }
 
-    for (int rowId = 0; rowId < this.matrix.length; rowId++) {
-      Array rowOfMatrixA = Array.init(this.matrix[rowId]);
-      Array rowOfMatrixB = Array.init(otherMatrix.matrix[rowId]);
-
-      if (!(rowOfMatrixA.deepEqual(rowOfMatrixB))) {
+    for (int rowId = 0; rowId < this.noOfRows; rowId++) {
+      if (!(areRowsSame(this.matrix[rowId], otherMatrix.matrix[rowId]))) {
         return false;
       }
     }
