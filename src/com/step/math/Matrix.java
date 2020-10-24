@@ -1,12 +1,12 @@
 package com.step.math;
 
 public class Matrix {
-  private int[][] matrix;
+  private int[][] values;
   private int noOfRows;
   private int noOfCols;
 
   public Matrix(int noOfRows, int noOfCols) {
-    this.matrix = new int[noOfRows][noOfCols];
+    this.values = new int[noOfRows][noOfCols];
     this.noOfRows = noOfRows;
     this.noOfCols = noOfCols;
   }
@@ -23,7 +23,7 @@ public class Matrix {
       }
 
       for (int colId = 0; colId < noOfCols; colId++) {
-        matrix.matrix[rowId][colId] = list[rowId][colId];
+        matrix.values[rowId][colId] = list[rowId][colId];
       }
     }
     return matrix;
@@ -39,8 +39,8 @@ public class Matrix {
 
     for (int rowId = startingIndex; rowId < this.noOfRows; rowId++) {
       for (int colId = startingIndex; colId < this.noOfCols; colId++) {
-        sumOfMatrices.matrix[rowId][colId] =
-          this.matrix[rowId][colId] + other.matrix[rowId][colId];
+        sumOfMatrices.values[rowId][colId] =
+          this.values[rowId][colId] + other.values[rowId][colId];
       }
     }
     return sumOfMatrices;
@@ -56,8 +56,8 @@ public class Matrix {
 
     for (int rowId = startingIndex; rowId < this.noOfRows; rowId++) {
       for (int colId = startingIndex; colId < this.noOfCols; colId++) {
-        differenceOfMatrices.matrix[rowId][colId] =
-          this.matrix[rowId][colId] - other.matrix[rowId][colId];
+        differenceOfMatrices.values[rowId][colId] =
+          this.values[rowId][colId] - other.values[rowId][colId];
       }
     }
     return differenceOfMatrices;
@@ -74,8 +74,8 @@ public class Matrix {
     for (int rowId1 = startingIndex; rowId1 < this.noOfRows; rowId1++) {
       for (int colId2 = startingIndex; colId2 < other.noOfCols; colId2++) {
         for (int rowId2 = startingIndex; rowId2 < other.noOfCols; rowId2++) {
-          productOfMatrices.matrix[rowId1][colId2] +=
-            this.matrix[rowId1][rowId2] * other.matrix[rowId2][colId2];
+          productOfMatrices.values[rowId1][colId2] +=
+            this.values[rowId1][rowId2] * other.values[rowId2][colId2];
         }
       }
     }
@@ -94,7 +94,7 @@ public class Matrix {
         int lastRowId = rowId - unitValue;
         if (colId != factorIdx) {
           int lastColId = colId < factorIdx ? colId : colId - unitValue;
-          coFactors.matrix[lastRowId][lastColId] = this.matrix[rowId][colId];
+          coFactors.values[lastRowId][lastColId] = this.values[rowId][colId];
         }
       }
     }
@@ -104,14 +104,14 @@ public class Matrix {
 
   public int determinant() {
     if (this.noOfCols == 1) {
-      return this.matrix[0][0];
+      return this.values[0][0];
     }
 
     int determinant = 0;
     int sign = 1;
     for (int factorIdx = 0; factorIdx < this.noOfCols; factorIdx++) {
       Matrix coFactors = this.getCoFactors(factorIdx);
-      determinant += sign * this.matrix[0][factorIdx] * coFactors.determinant();
+      determinant += sign * this.values[0][factorIdx] * coFactors.determinant();
       sign = -sign;
     }
     return determinant;
@@ -123,15 +123,15 @@ public class Matrix {
 
     for (int rowId = startingIndex; rowId < this.noOfCols; rowId++) {
       for (int colId = startingIndex; colId < this.noOfRows; colId++) {
-        transposedMatrix.matrix[rowId][colId] = this.matrix[colId][rowId];
+        transposedMatrix.values[rowId][colId] = this.values[colId][rowId];
       }
     }
     return transposedMatrix;
   }
 
   public boolean hasElement(int element) {
-    for (int rowId = 0; rowId < this.matrix.length; rowId++) {
-      Array rowOfMatrix = Array.init(this.matrix[rowId]);
+    for (int rowId = 0; rowId < this.values.length; rowId++) {
+      Array rowOfMatrix = Array.init(this.values[rowId]);
 
       if (rowOfMatrix.has(element)) {
         return true;
@@ -142,7 +142,7 @@ public class Matrix {
 
   public boolean hasRow(int[] array) {
     for (int rowId = 0; rowId < this.noOfRows; rowId++) {
-      if (this.areRowsSame(array, this.matrix[rowId])) {
+      if (this.areRowsSame(array, this.values[rowId])) {
         return true;
       }
     }
@@ -183,7 +183,7 @@ public class Matrix {
     }
 
     for (int rowId = 0; rowId < this.noOfRows; rowId++) {
-      if (!(areRowsSame(this.matrix[rowId], otherMatrix.matrix[rowId]))) {
+      if (!(areRowsSame(this.values[rowId], otherMatrix.values[rowId]))) {
         return false;
       }
     }
@@ -194,7 +194,7 @@ public class Matrix {
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("Matrix :\n");
-    for (int[] row : this.matrix) {
+    for (int[] row : this.values) {
       for (int value : row) {
         stringBuilder.append(value).append(" ");
       }
