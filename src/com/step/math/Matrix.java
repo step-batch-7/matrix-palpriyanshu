@@ -29,12 +29,8 @@ public class Matrix {
     return new Matrix(matrix);
   }
 
-  private boolean isMatrixSizeEqual(Matrix other) {
-    return (this.noOfCols == other.noOfCols && this.noOfRows == other.noOfRows);
-  }
-
   public Matrix add(Matrix other) {
-    if (!isMatrixSizeEqual(other)) {
+    if (!(this.isMatricesOrderSame(other))) {
       return null;
     }
 
@@ -51,7 +47,7 @@ public class Matrix {
   }
 
   public Matrix sub(Matrix other) {
-    if (!isMatrixSizeEqual(other)) {
+    if (!(this.isMatricesOrderSame(other))) {
       return null;
     }
 
@@ -105,23 +101,18 @@ public class Matrix {
   }
 
   public int determinant() {
-    if (this.noOfCols == 1) {
-      return this.matrix[0][0];
+    if (this.isFirstOrderMatrix()) {
+      return this.firstOrderMatrixDeterminant();
     }
 
-    if (this.noOfCols == 2) {
-      return (
-        this.matrix[0][0] *
-        this.matrix[1][1] -
-        this.matrix[0][1] *
-        this.matrix[1][0]
-      );
+    if (this.isSecondOrderMatrix()) {
+      return this.secondOrderMatrixDeterminant();
     }
 
     int determinant = 0;
     int sign = 1;
     for (int factorIdx = 0; factorIdx < this.noOfCols; factorIdx++) {
-      Matrix coFactors = getCoFactors(factorIdx);
+      Matrix coFactors = this.getCoFactors(factorIdx);
       determinant += sign * this.matrix[0][factorIdx] * coFactors.determinant();
       sign = -sign;
     }
@@ -151,7 +142,7 @@ public class Matrix {
     return false;
   }
 
-  public boolean hasSubArray(int[] array) {
+  public boolean hasRow(int[] array) {
     Array subArray = Array.init(array);
 
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
@@ -162,6 +153,31 @@ public class Matrix {
       }
     }
     return false;
+  }
+
+  private boolean isMatricesOrderSame(Matrix other) {
+    return (this.noOfCols == other.noOfCols && this.noOfRows == other.noOfRows);
+  }
+
+  private boolean isFirstOrderMatrix() {
+    return this.noOfCols == 1;
+  }
+
+  private int firstOrderMatrixDeterminant() {
+    return this.matrix[0][0];
+  }
+
+  private boolean isSecondOrderMatrix() {
+    return this.noOfCols == 2;
+  }
+
+  private int secondOrderMatrixDeterminant() {
+    return (
+      this.matrix[0][0] *
+      this.matrix[1][1] -
+      this.matrix[0][1] *
+      this.matrix[1][0]
+    );
   }
 
   @Override
@@ -176,14 +192,13 @@ public class Matrix {
 
     Matrix otherMatrix = (Matrix) other;
 
-    if (!isMatrixSizeEqual(otherMatrix)) {
+    if (!(this.isMatricesOrderSame(otherMatrix))) {
       return false;
     }
 
     for (int rowId = 0; rowId < this.matrix.length; rowId++) {
       Array rowOfMatrixA = Array.init(this.matrix[rowId]);
       Array rowOfMatrixB = Array.init(otherMatrix.matrix[rowId]);
-      int[] subArray = this.matrix[rowId];
 
       if (!(rowOfMatrixA.deepEqual(rowOfMatrixB))) {
         return false;
