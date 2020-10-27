@@ -1,9 +1,7 @@
 package com.step.math;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -12,9 +10,9 @@ public class MatrixTest {
   @Test
   public void init_shouldInitializeValidMatrix() {
     Matrix matrix = secondOrderMatrix(1, 2, 3, 4);
-    assertThat(matrix instanceof Matrix, is(true));
-    assertThat(matrix.hasRow(new int[] { 1, 2 }), is(true));
-    assertThat(matrix.hasRow(new int[] { 3, 4 }), is(true));
+    assertEquals(true,matrix instanceof Matrix);
+    assertEquals(true,matrix.hasRow(new int[] { 1, 2 }));
+    assertEquals(true, matrix.hasRow(new int[] { 3, 4 }));
   }
 
   @Test
@@ -29,7 +27,7 @@ public class MatrixTest {
     Matrix matrix2 = secondOrderMatrix(1, 2, 3, 4);
     Matrix expectedSum = secondOrderMatrix(2, 4, 6, 8);
 
-    assertThat(matrix1.add(matrix2), is(expectedSum));
+    assertEquals(expectedSum, matrix1.add(matrix2));
   }
 
   @Test
@@ -45,7 +43,7 @@ public class MatrixTest {
     Matrix matrix2 = secondOrderMatrix(1, 2, 3, 4);
 
     Matrix expectedDifference = secondOrderMatrix(0, 0, 0, 0);
-    assertThat(matrix1.sub(matrix2), is(expectedDifference));
+    assertEquals(expectedDifference,matrix1.sub(matrix2));
   }
 
   @Test
@@ -62,7 +60,7 @@ public class MatrixTest {
     Matrix matrix2 = secondOrderMatrix(1, 2, 3, 4);
 
     Matrix expectedProduct = secondOrderMatrix(7, 10, 15, 22);
-    assertThat(matrix1.multiply(matrix2), is(expectedProduct));
+    assertEquals(expectedProduct,matrix1.multiply(matrix2));
   }
 
   @Test
@@ -75,19 +73,19 @@ public class MatrixTest {
 
   @Test
   public void determinant_shouldCalculateDeterminantForMatrixSize1() {
-    assertThat(firstOrderMatrix(1).determinant(), is(1));
+    assertEquals(1,firstOrderMatrix(1).determinant());
   }
 
   @Test
   public void determinant_shouldCalculateDeterminantForMatrixSize2() {
     Matrix matrix = secondOrderMatrix(1, 2, 3, 4);
-    assertThat(matrix.determinant(), is(-2));
+    assertEquals(-2,matrix.determinant());
   }
 
   @Test
   public void determinant_shouldCalculateDeterminantForMatrixSize3() {
     Matrix matrix = thirdOrderMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    assertThat(matrix.determinant(), is(0));
+    assertEquals(0,matrix.determinant());
   }
 
   @Test
@@ -140,25 +138,25 @@ public class MatrixTest {
   @Test
   public void hasElement_shouldReturnTrueWhenMatrixHasGivenElement() {
     Matrix matrix = thirdOrderMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    assertThat(matrix.hasElement(2), is(true));
+    assertEquals(true,matrix.hasElement(2));
   }
 
   @Test
   public void hasElement_shouldReturnFalseWhenMatrixDoesNotHasGivenElement() {
     Matrix matrix = thirdOrderMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    assertThat(matrix.hasElement(10), is(false));
+    assertEquals(false,matrix.hasElement(10));
   }
 
   @Test
   public void hasRow_shouldReturnTrueWhenMatrixHasGivenSubArray() {
     Matrix matrix = thirdOrderMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    assertThat(matrix.hasRow(new int[] { 1, 2, 3 }), is(true));
+    assertEquals(true,matrix.hasRow(new int[] { 1, 2, 3 }));
   }
 
   @Test
   public void hasRow_shouldReturnFalseWhenMatrixDoesNotHasGivenSubArray() {
     Matrix matrix = thirdOrderMatrix(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    assertThat(matrix.hasRow(new int[] { 3, 3, 3 }), is(false));
+    assertEquals(false,matrix.hasRow(new int[] { 3, 3, 3 }));
   }
 
   @Test
