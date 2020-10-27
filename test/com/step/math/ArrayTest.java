@@ -1,7 +1,6 @@
 package com.step.math;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -23,13 +22,13 @@ public class ArrayTest {
   public void shouldReturnIndexOfElementIfPresent() {
     int[] list1 = { 1, 2, 3 };
     Array array = Array.init(list1);
-    assertThat(array.findIndex(2), is(1));
+    assertEquals(1,array.findIndex(2));
   }
 
   @Test
   public void shouldReturnNegative1IfElementAbsent() {
     int[] list1 = { 1, 2, 3 };
     Array array = Array.init(list1);
-    assertThat(array.findIndex(4), is(-1));
+    assertEquals(-1,array.findIndex(4));
   }
 }
